@@ -37,14 +37,14 @@ The best NN model still fell slightly short of the random forest but offered ins
 Note: I experimented with several traditional machine learning algorithms, including SVM and logistic regression, but random forest gave the best results and is the one I used for the final comparison.
 
 
-##Error Analysis
+## Error Analysis
 Each model was evaluated using:
-F1 Score
-Precision
-Recall
-Accuracy
-ROC-AUC
-Confusion Matrix
+\F1 Score
+\Precision
+\Recall
+\Accuracy
+\ROC-AUC
+\Confusion Matrix
 
 Matplotlib, Seaborn, and sklearn were used to visualize the evaluation.
 
