@@ -15,111 +15,54 @@ This project analyzes student data incorporating multi-dimensional factors criti
 - **Academic factors**: Historical performance, attendance records
 - **Infrastructure**: School accessibility, distance from home
 
+## Dropout Prediction Model Implementation
 
-# Student Dropout Prediction - ML Optimization Techniques
-
-
-### Comprehensive Model Comparison Table
-
-| Model | Optimization Techniques | Accuracy | Precision | Recall | F1-Score | AUC-ROC |
-|-------|------------------------|----------|-----------|--------|----------|---------|
-| **Baseline NN** | Adam only | 0.8769 | 0.7000 | 0.5833 | 0.6364 | 0.8462 |
-| **Adam+L2+Dropout** | Adam + L2 Regularization + Dropout(0.3) | 0.8923 | 0.7500 | 0.6000 | **0.6667** | 0.8590 |
-| **RMSprop+L1** | RMSprop + L1 Regularization + EarlyStopping | 0.8846 | 0.7333 | 0.5833 | 0.6512 | 0.8462 |
-| **SGD+L1_L2** | SGD + L1_L2 Regularization + Dropout(0.4) | 0.8615 | 0.6471 | 0.5833 | 0.6135 | 0.8205 |
-| **Random Forest** | GridSearch: n_estimators=200, max_depth=20 | 0.8923 | 0.7500 | 0.6000 | **0.6667** | 0.8462 |
-| **SVM** | GridSearch: C=10, kernel=rbf, gamma=scale | 0.8769 | 0.7273 | 0.5333 | 0.6154 | 0.8205 |
-
-### Original Analysis and Critical Insights
-
-#### **Why L2 Regularization + Dropout Achieved Best Performance**
-
-The **Adam+L2+Dropout** model achieved the highest F1-score (0.6667) due to a synergistic combination of optimization techniques
-
-1. **L2 Regularization Impact**: L2 penalty (weight decay instead of zero reduction) prevented the model from overfitting to training data by reducing the weight magnitudes. This was particularly effective because our dataset has 33 features which has the potential for a multicollinearity between the social and academic factors.
-
-2. **Dropout Complementarity**: The 0.3 dropout rate provided a different regularization mechanism by randomly reducing some neurons to zero during the training process.  This forced the network to learn varied combinations that don't depend on   the neural network.
-
-3. **Adam Optimizer Stability**: Adam's adaptive learning rates handled the sparse gradients effectively, especially important given our mixed categorical/numerical features and class imbalance (more non-dropouts than dropouts).
-
-#### **Optimizer-Specific Performance Analysis**
-
-**RMSprop + L1 Performance (F1: 0.6512)**:
-- Feature selection was performed by L1 which took most weights to zero.
-- This was crucial for interpretability but it somehow reduced the capacity of the model.
-- RMSprop's momentum helped navigate the non-smooth L1 penalty landscape
-- **Critical Insight**:L1 indicated that family support and the study time were the most predictive features.
-
-**SGD + L1_L2 Underperformance (F1: 0.6135)**:
-- SGD required careful learning rate tuning (0.01) but still struggled with convergence
-- Combined L1_L2 regularization created competing objectives that SGD couldn't balance effectively
-- High dropout (0.4) compounded the training difficulty
-- **Key Learning**: Complex regularization combinations require more sophisticated optimizers
-
-#### **Traditional ML vs Neural Networks**
-
-**Random Forest Tied Performance (F1: 0.6667)**:
-- Achieved identical F1-score to best neural network
-- **Advantage**: No hyperparameter sensitivity, natural feature importance ranking
-- **Limitation**: Cannot capture complex non-linear feature interactions like neural networks
-- **Practical Insight**: For this dataset size and complexity, ensemble methods are equally effective
-
-**SVM Moderate Performance (F1: 0.6154)**:
-- RBF kernel captured non-linear relationships but required extensive scaling
-- **Critical Finding**: Performance highly sensitive to C parameter - wrong choice led to underfitting
-- **Lesson**: SVMs require more careful preprocessing and validation than tree-based methods
-
-#### **Error Analysis Deep Dive**
-
-**Precision vs Recall Trade-off**:
-- All models achieved higher precision (0.65-0.75) than recall (0.53-0.60)
-- **Interpretation**: Models are conservative - when they predict dropout, they're usually correct
-- **Business Impact**: Low false positive rate means intervention resources aren't wasted
-- **Concern**: Missing 40% of actual dropouts could have serious consequences
-
-**Class Imbalance Impact**:
-- Dataset has ~80% non-dropout, 20% dropout students
-- **Observation**: All models biased toward majority class
-- **Solution Attempted**: Stratified sampling helped but didn't eliminate bias
-- **Future Work**: Cost-sensitive learning or SMOTE could improve recall
-
-#### **Optimization Technique Rankings by Impact**
-
-1. **L2 Regularization**: +4.7% F1-score improvement over baseline
-2. **Dropout (0.2-0.3)**: +3.2% F1-score improvement  
-3. **Early Stopping**: +2.1% F1-score improvement
-4. **Adam Optimizer**: +1.8% F1-score improvement over SGD
-5. **L1 Regularization**: +1.5% F1-score improvement
-
-#### **Practical Deployment Recommendations**
-
-**Best Model Choice**: Adam+L2+Dropout neural network
-- **Reasoning**: Highest F1-score with good generalization
-- **Deployment**: Real-time prediction capability with 0.86 AUC-ROC
-- **Monitoring**: Track precision/recall balance in production
-
-**Alternative**: Random Forest for interpretability
-- **Use Case**: When stakeholders need feature importance explanations
-- **Advantage**: No neural network "black box" concerns
-- **Trade-off**: Identical performance but better explainability
-
-### Conclusions and Future Work
-
-This comprehensive analysis demonstrates that **proper regularization is more impactful than optimizer choice** for student dropout prediction. The combination of L2 regularization with moderate dropout provides the optimal bias-variance trade-off for this educational dataset.
-
-**Key Contributions**:
-1. Demonstrated that traditional ML can match neural network performance on structured data
-2. Quantified the individual impact of different optimization techniques
-3. Provided actionable insights for educational intervention systems
-
-**Future Research Directions**:
-1. Implement cost-sensitive learning to improve recall
-2. Explore ensemble methods combining neural networks and Random Forest
-3. Investigate temporal patterns using sequential models for longitudinal student data
+The aim of this project is to predict student dropout in both primary and secondary school by analyzing the demographics, socioecomic and school-related factors. The goal is to identify patterns in student behavior that signal potential risk of dropping out. I built and compared different classification models using traditional ML algorithms and neural networks. I used the Student Dropout Dataset with over 670 records and 33 features that are related to education and lifestyle. 
 
 
 
-### Loading and Using Models
+##The Combinations that worked better
+Model 2,  which used the Adam optimizer, L2 regularization, and a dropout of 0.3, performed best overall.  This model showed a strong accuracy and F1 score while maintaining good generalization due to the combination of both regularization and adaptive learning. The L2 (ridge) helped in controlling model complexity and reduced overfitting, especially with dropout.
+
+
+
+
+ ##Neural Network  and Traditional Machine Learning comparison
+Traditional machine learning (the random forest model)  was the best overall model , even outperfoming all neural networks as indicated in its raw metrics.
+SVM was the best-performing traditional model with kernel = ‘rbf’ and C=1
+Neural networks performed better after applying L2 regularization, dropout, and early stopping. 
+The best NN model still fell slightly short of the random forest but offered insight into how deep models can be improved with optimized tuning. 
+
+
+Note: I experimented with several traditional machine learning algorithms, including SVM and logistic regression, but random forest gave the best results and is the one I used for the final comparison.
+
+
+##Error Analysis
+Each model was evaluated using:
+F1 Score
+Precision
+Recall
+Accuracy
+ROC-AUC
+Confusion Matrix
+
+Matplotlib, Seaborn, and sklearn were used to visualize the evaluation.
+
+
+##Summary of Results
+The Random Forest model was the top perfoming of all becuase it had a perfect accuracy , F1 score and an AUC.
+Model 3 (RMSprop + L1 + Early Stopping) had the best performance with an F1-score of 0.9474 and an AUC of 0.9918 among the neural networks.
+
+The SDG model significantly struggled despite using regularization and dropout—possibly due to its sensitivity to learning rate and convergence challenges.
+
+Models with a combination of dropout, regularization, and early stopping generally performed better than the baseline.
+
+While optimized neural networks with RMSprop and L1 regularization achieved a strong F1 score of 0.9474, the Random Forest algorithm outperformed all models with a perfect classification (F1 SCORE	1.0000). Therefore, for this dataset, Random Forest proved more effective.
+
+##ML Hyperparameters (for Random Forest):
+N-estimators: 200, max_depth: 20, min_samples_split: 2
+
+
 ```python
 import tensorflow as tf
 import joblib
