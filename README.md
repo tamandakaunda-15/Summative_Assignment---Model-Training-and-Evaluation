@@ -52,12 +52,12 @@ Matplotlib, Seaborn, and sklearn were used to visualize the evaluation.
 ## Summary of Results
 
 
-| Instance     | Optimizer        | Regularizer | Learning Rate | Epochs | Early Stopping | Dropout | Accuracy | Loss (visually observed) | F1-Score | Precision | Recall | AUC-ROC |
+| Instance     | Optimizer        | Regularizer | Learning Rate | Epochs | Early Stopping | Dropout | Accuracy | Loss | F1-Score | Precision | Recall | AUC-ROC |
 | ------------ | ---------------- | ----------- | ------------- | ------ | -------------- | ------- | -------- | ------------------------ | -------- | --------- | ------ | ------- |
-| 1 (Baseline) | Default (`Adam`) | None        | 0.001         | 50     | ❌ No           | 0.0     | 0.9462   | \~0.25                   | 0.8293   | 0.8095    | 0.85   | 0.9691  |
-| 2            | Adam             | L2          | 0.001         | 100    | ✅ Yes          | 0.3     | 0.9692   | \~0.18                   | 0.9000   | 0.9000    | 0.90   | 0.9809  |
-| 3            | RMSprop          | L1          | 0.001         | 100    | ✅ Yes          | 0.2     | 0.9846   | \~0.12                   | 0.9474   | 1.0000    | 0.90   | 0.9918  |
-| 4            | SGD              | L1\_L2      | 0.001         | 200    | ✅ Yes          | 0.4     | 0.8462   | \~0.35                   | 0.0000   | 0.0000    | 0.00   | 0.7977  |
+| 1 (Baseline) | Default (`Adam`) | None        | 0.001         | 50     |  No           | 0.0     | 0.9462   | 0.25                   | 0.8293   | 0.8095    | 0.85   | 0.9691  |
+| 2            | Adam             | L2          | 0.001         | 100    | Yes          | 0.3     | 0.9692   | 0.18                   | 0.9000   | 0.9000    | 0.90   | 0.9809  |
+| 3            | RMSprop          | L1          | 0.001         | 100    |  Yes          | 0.2     | 0.9846   | 0.12                   | 0.9474   | 1.0000    | 0.90   | 0.9918  |
+| 4            | SGD              | L1\_L2      | 0.001         | 200    |  Yes          | 0.4     | 0.8462   | 0.35                   | 0.0000   | 0.0000    | 0.00   | 0.7977  |
 
 
 The Random Forest model was the top perfoming of all becuase it had a perfect accuracy , F1 score and an AUC.
