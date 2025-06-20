@@ -21,15 +21,15 @@ The aim of this project is to predict student dropout in both primary and second
 
 
 
-##The Combinations that worked better
+## The Combinations that worked better
 Model 2,  which used the Adam optimizer, L2 regularization, and a dropout of 0.3, performed best overall.  This model showed a strong accuracy and F1 score while maintaining good generalization due to the combination of both regularization and adaptive learning. The L2 (ridge) helped in controlling model complexity and reduced overfitting, especially with dropout.
 
 
 
 
- ##Neural Network  and Traditional Machine Learning comparison
+ ## Neural Network  and Traditional Machine Learning comparison
 Traditional machine learning (the random forest model)  was the best overall model , even outperfoming all neural networks as indicated in its raw metrics.
-SVM was the best-performing traditional model with kernel = ‘rbf’ and C=1
+SVM was the best-performing traditional model with kernel = ‘rbf’ and C=1.
 Neural networks performed better after applying L2 regularization, dropout, and early stopping. 
 The best NN model still fell slightly short of the random forest but offered insight into how deep models can be improved with optimized tuning. 
 
@@ -49,7 +49,17 @@ Confusion Matrix
 Matplotlib, Seaborn, and sklearn were used to visualize the evaluation.
 
 
-##Summary of Results
+## Summary of Results
+
+
+| Instance     | Optimizer        | Regularizer | Learning Rate | Epochs | Early Stopping | Dropout | Accuracy | Loss (visually observed) | F1-Score | Precision | Recall | AUC-ROC |
+| ------------ | ---------------- | ----------- | ------------- | ------ | -------------- | ------- | -------- | ------------------------ | -------- | --------- | ------ | ------- |
+| 1 (Baseline) | Default (`Adam`) | None        | 0.001         | 50     | ❌ No           | 0.0     | 0.9462   | \~0.25                   | 0.8293   | 0.8095    | 0.85   | 0.9691  |
+| 2            | Adam             | L2          | 0.001         | 100    | ✅ Yes          | 0.3     | 0.9692   | \~0.18                   | 0.9000   | 0.9000    | 0.90   | 0.9809  |
+| 3            | RMSprop          | L1          | 0.001         | 100    | ✅ Yes          | 0.2     | 0.9846   | \~0.12                   | 0.9474   | 1.0000    | 0.90   | 0.9918  |
+| 4            | SGD              | L1\_L2      | 0.001         | 200    | ✅ Yes          | 0.4     | 0.8462   | \~0.35                   | 0.0000   | 0.0000    | 0.00   | 0.7977  |
+
+
 The Random Forest model was the top perfoming of all becuase it had a perfect accuracy , F1 score and an AUC.
 Model 3 (RMSprop + L1 + Early Stopping) had the best performance with an F1-score of 0.9474 and an AUC of 0.9918 among the neural networks.
 
@@ -59,7 +69,7 @@ Models with a combination of dropout, regularization, and early stopping general
 
 While optimized neural networks with RMSprop and L1 regularization achieved a strong F1 score of 0.9474, the Random Forest algorithm outperformed all models with a perfect classification (F1 SCORE	1.0000). Therefore, for this dataset, Random Forest proved more effective.
 
-##ML Hyperparameters (for Random Forest):
+## ML Hyperparameters (for Random Forest):
 N-estimators: 200, max_depth: 20, min_samples_split: 2
 
 
