@@ -60,6 +60,8 @@ Matplotlib, Seaborn, and sklearn were used to visualize the evaluation.
 | 4            | SGD              | L1\_L2      | 0.001         | 200    |  Yes          | 0.4     | 0.8462   | 0.35                   | 0.0000   | 0.0000    | 0.00   | 0.7977  |
 
 
+**Note**: Loss values are estimated based on the final training and validation loss curves.
+
 The Random Forest model was the top perfoming of all becuase it had a perfect accuracy , F1 score and an AUC.
 Model 3 (RMSprop + L1 + Early Stopping) had the best performance with an F1-score of 0.9474 and an AUC of 0.9918 among the neural networks.
 
